@@ -3063,6 +3063,30 @@ class SimplePie_Item
 		}
 	}
 
+	function get_unsanitized_content($content_only = false)
+	{
+		if ($return = $this->get_item_tags(SIMPLEPIE_NAMESPACE_ATOM_10, 'content'))
+		{
+			return $return[0]['data'];
+		}
+		elseif ($return = $this->get_item_tags(SIMPLEPIE_NAMESPACE_ATOM_03, 'content'))
+		{
+			return $return[0]['data'];
+		}
+		elseif ($return = $this->get_item_tags(SIMPLEPIE_NAMESPACE_RSS_10_MODULES_CONTENT, 'encoded'))
+		{
+			return $return[0]['data'];
+		}
+		elseif (!$content_only)
+		{
+			return $this->get_description(true);
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	public function get_category($key = 0)
 	{
 		$categories = $this->get_categories();
